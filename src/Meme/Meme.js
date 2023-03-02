@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react';
 import styles from './styles.module.css';
-
+import { useHistory } from 'react-router-dom'
 
 
 export const Meme = () => {
@@ -8,12 +8,45 @@ export const Meme = () => {
     const [memes, setMemes] = useState([]);
     const [memeIndex, setMemeIndex] = useState(0)
     const [captions, setCaptions] = useState([]);
+    const history = useHistory();
 
 
-    const updateCaption = (e, index) =>{
+
+    const generateMeme = () => {
+      const currentMeme = memes[memeIndex];
+      const formData = new FormData();
+
+      formData.append('username', 'spice97');
+    formData.append('password', 'Matou13e42');
+    formData.append('template_id', currentMeme.id);
+    captions.forEach((c, index) => formData.append(`boxes[${index}][text]`, c));
+
+    fetch('https://api.imgflip.com/caption_image',{
+      method: 'POST',
+      body: formData
+    }).then(res =>{
+      res.json().then(res => {
+        history.push(`./generated`)
+      });
+    });
+  };
+
+
+    const updateCaption = (e, index) => {
       const text = e.target.value || '';
-      setCaptions
-    }
+      setCaptions(
+        captions.map((c, i) => {
+          if(index === i) {
+            return text;
+          } else {
+            return c;
+          }
+        })
+      );
+    };
+
+
+
 
     const shuffleMemes = (array) => {
       for (let i = array.length - 1; i > 0; i--) {
@@ -24,6 +57,9 @@ export const Meme = () => {
       }
     };
     
+
+
+
     useEffect(() => {
         fetch('https://api.imgflip.com/get_memes').then(res => {
           res.json().then(res => {
@@ -42,21 +78,23 @@ export const Meme = () => {
           setCaptions(Array(memes[memeIndex].box_count).fill(''));
         }
       }, [memeIndex, memes]);
+
+  
     
     
-    return (
-        memes.length ?
+      return(
+        memes.length ? 
         <div className={styles.container}>
-         <button onClick={generateMeme} className={styles.generate}>Generate</button>
+          <button onClick={generateMeme} className={styles.generate}>Generate</button>
           <button onClick={() => setMemeIndex(memeIndex + 1)} className={styles.skip}>Skip</button>
           {
-        captions.map((c, index) => (
-          <input onChange={(e) => updateCaption(e, index)} key={index} />
-        ))
-      }
-          <img src ={memes[memeIndex].url}/>
-        </div>:
+            captions.map((c, index) => (
+              <input onChange={(e) => updateCaption(e, index)} key={index} />
+            ))
+          }
+          <img alt='meme' src={memes[memeIndex].url} />
+        </div> : 
         <></>
-    );
+      );
+    };
     
-}
