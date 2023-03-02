@@ -5,8 +5,8 @@ import { useClipboard } from 'use-clipboard-copy';
 
 export const MemeGenerated = () => {
 
-  const [copied, setCopied] = useState(false);
-
+  
+    const [copied, setCopied] = useState(false);
   const clipboard = useClipboard();
   const history = useHistory();
   const location = useLocation();
@@ -20,7 +20,7 @@ export const MemeGenerated = () => {
   return(
     <div className={styles.container}>
       <button onClick={() => history.push('/')} className={styles.home}>
-        Make More Memes
+        Login and make memes
       </button>
       { url && <img alt='meme' src={url} /> }
       <button onClick={copyLink} className={styles.copy}>
