@@ -14,7 +14,7 @@ code {
 
 button {
   cursor: pointer;
-  display: block;
+  display:flex;
   width: 350px;
   padding: 10px;
   margin: auto;

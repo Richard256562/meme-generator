@@ -2,11 +2,13 @@
     margin-top: 50px;
   }
   .copy {
-    background-color: #cfd7df;
+    background-color: #f0ad4e;
     margin-top: 20px;
     font-size: medium;
+    border-radius: 520px;
   }
   .home {
     background-color: #f0ad4e;
     font-size: medium;
+    border-radius: 520px;
   }

@@ -3,10 +3,12 @@
   }
   .skip {
     background-color: #0f0f0e;
-    font-size: large;
+    font-size: small;
+    border-radius: 520px;
   }
   .generate {
     background-color: #524e51;
-    font-size: large ;
+    font-size: small;
+    border-radius: 520px;
   }
   
